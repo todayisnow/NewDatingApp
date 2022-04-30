@@ -5,20 +5,20 @@
 <p *ngIf="!users"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
 
 <table *ngIf="users">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Gender</th>
-            <th>Summary</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let forecast of users">
-            <td>{{ forecast.id }}</td>
-            <td>{{ forecast.username }}</td>
-            <td>{{ forecast.gender }}</td>
-            <td><img src="{{forecast.photoUrl}}"/></td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th class="d-flex">Id</th>
+      <th>Name</th>
+      <th>Gender</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let forecast of users">
+      <td>{{ forecast.id }}</td>
+      <td>{{ forecast.username }}</td>
+      <td>{{ forecast.gender }}</td>
+      <td><img src="{{forecast.photoUrl}}" /></td>
+    </tr>
+  </tbody>
 </table>

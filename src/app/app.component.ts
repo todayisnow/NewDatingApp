@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
       this.getUsers();
     }
 
-
+  title = "NewDatingApp";
 
   private getUsers() {
     this.http.get('/api/users').subscribe({
