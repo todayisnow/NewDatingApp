@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 //import { User } from '../_models/user';
-import { ReplaySubject } from "rxjs";
+import { BehaviorSubject, ReplaySubject } from "rxjs";
 import { User } from '../_models/user';
 
 
@@ -16,11 +16,17 @@ import { User } from '../_models/user';
 })
 export class AccountService {
   baseUrl = "/api/account";// environment.apiUrl;
-   private currentUserSource = new ReplaySubject<User>(1); //It buffers a set number of values (1) and will emit those values immediately to any new subscribers in addition to emitting new values to existing subscribers.
+  private currentUserSource = new BehaviorSubject<User>(null);
+  // It buffers a set number of values (1) and will emit those values immediately
+  // to any new subscribers in addition to emitting new values to existing subscribers.
+  //
+  // ReplaySubject will block the subscriber waiting for the first value
+  // whereas BehaviorSubject requires an initial value when created
+
   currentUser$ = this.currentUserSource.asObservable();//create observable to subscribe to
   
   constructor(private http: HttpClient/*, private presence: PresenceService*/) {
-
+   // this.currentUserSource.next(null);
   }
 
   login(model: any) {

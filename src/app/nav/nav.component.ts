@@ -17,7 +17,7 @@ export class NavComponent implements OnInit {
   model: any = {}
  
   /*currentUser$: Observable<User>;*/
-  constructor(public accountService: AccountService/*, private router: Router, private toastr: ToastrService,
+  constructor(public accountService: AccountService, private router: Router, private toastr: ToastrService//,
    /* private membersService:MembersService*/)//account is public to be access to templte {html}
    {
 
@@ -28,17 +28,23 @@ export class NavComponent implements OnInit {
   login() {
    
     this.accountService.login(this.model).subscribe(
-    //  {
-    //    next: res => console.log(res)/*this.router.navigateByUrl('/members')*/
-      //  }
-    );
+      {
+        next: () => {
+          this.router.navigateByUrl('/members');
+          this.toastr.success("Logged In");
+        },
+        error: (error) =>          this.toastr.error(error.error)
+         
+        
+      });
+    
   }
   logout() {
     this.accountService.logout();
     
 
     //this.membersService.resetMemberCache();
-    //this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/');
 
 
   }
