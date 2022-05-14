@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { ToastrService} from 'ngx-toastr'
 import { filter, Observable } from 'rxjs';
 import { User } from '../_models/user';
+import { MembersService } from '../_services/members.service';
 //import { MembersService } from "../_services/members.service";
 
 @Component({
@@ -20,7 +21,7 @@ export class NavComponent implements OnInit {
   constructor(public accountService: AccountService, private router: Router, private toastr: ToastrService//,
    /* private membersService:MembersService*/)//account is public to be access to templte {html}
    {
-
+    
     }
   ngOnInit(): void {
     //this.currentUser$ = this.accountService.currentUser$;
@@ -30,6 +31,7 @@ export class NavComponent implements OnInit {
     this.accountService.login(this.model).subscribe(
       {
         next: () => {
+
           this.router.navigateByUrl('/members');
           this.toastr.success("Logged In");
         }

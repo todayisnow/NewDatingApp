@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './_models/user';
 import { AccountService } from './_services/account.service';
+import { MembersService } from './_services/members.service';
 
 @Component({
   selector: 'app-root',
@@ -13,11 +14,12 @@ export class AppComponent implements OnInit {
   public users?: any;
 
   constructor(private accountService: AccountService, private http: HttpClient) {
-    
+   
   }
 
    
   ngOnInit() {
+    
    // this.getUsers();
     this.setCurrentUser();
   }

@@ -23,7 +23,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'members', component: MemberListComponent },
-     // { path: 'members/:username', component: MemberDetailComponent, resolve: { member: MemberDetailedResolver } },
+      { path: 'members/:username', component: MemberDetailComponent /*, resolve: { member: MemberDetailedResolver }*/ },
       //{ path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard] },//if members/edit to avoid confilg with be4 we use pathMatch:full and move it up
       { path: 'lists', component: ListsComponent },
       { path: 'messages', component: MessagesComponent },

@@ -15,7 +15,7 @@ import { User } from '../_models/user';
   providedIn: 'root'
 })
 export class AccountService {
-  baseUrl = "/api/account";// environment.apiUrl;
+  baseUrl = "/api/";// environment.apiUrl;
   private currentUserSource = new BehaviorSubject<User>(null);
   // It buffers a set number of values (1) and will emit those values immediately
   // to any new subscribers in addition to emitting new values to existing subscribers.
@@ -30,7 +30,7 @@ export class AccountService {
   }
 
   login(model: any) {
-    return this.http.post<User>(this.baseUrl + "/login", model).
+    return this.http.post<User>(this.baseUrl + "account/login", model).
       pipe(
         map((response: User) => {//manipulate the response before subscription 
           const user = response;
@@ -45,7 +45,7 @@ export class AccountService {
   }
 
   register(model: any) {
-    return this.http.post(this.baseUrl + "/register", model).pipe(
+    return this.http.post(this.baseUrl + "account/register", model).pipe(
       map((user: User) => {
         if (user) {
           this.setCurrentUser(user);
