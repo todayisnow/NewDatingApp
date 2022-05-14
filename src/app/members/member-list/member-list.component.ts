@@ -15,7 +15,7 @@ import { User } from "../../_models/user";
   styleUrls: ['./member-list.component.css']
 })
 export class MemberListComponent implements OnInit {
-  members: Member[];
+  members: Observable<Member[]>;
   pagination: Pagination;
   userParams: UserParams;
   genderList = [{ value: 'male', display: "Males" }, { value: 'female', display: "Females" }]
@@ -33,13 +33,14 @@ export class MemberListComponent implements OnInit {
     if (resetPage != null && resetPage != undefined && resetPage) {
       this.userParams.pageNumber = 1;
     }
-    
-    this.memberService.getMembers(this.userParams).subscribe((response: any/*PaginatedResult<Member[]>*/) => {
-      this.members = response;//.result;
-     // this.pagination = response.pagination;
+    this.members = this.memberService.getMembers(this.userParams);
+
+    //this.memberService.getMembers(this.userParams).subscribe((response: any/*PaginatedResult<Member[]>*/) => {
+    //  this.members = response;//.result;
+    // // this.pagination = response.pagination;
      
-        }
-    );
+    //    }
+    //);
   }
   pageChanged(event: any): void {
     this.userParams.pageNumber = event.page;

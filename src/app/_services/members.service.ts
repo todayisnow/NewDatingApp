@@ -24,7 +24,7 @@ export class MembersService {
   memberCache= new Map();
   userParams: UserParams;
   user: User;
-
+  members: Member[] = []
   constructor(private http: HttpClient, private accountService: AccountService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe((user: User) => {
       this.user = user;
@@ -49,7 +49,13 @@ export class MembersService {
   }
 
   getMembers(userParams: UserParams) {
-    return this.http.get<Member[]>(this.baseUrl + 'users/' );
+    if (this.members.length > 0) return of(this.members)
+    return this.http.get<Member[]>(this.baseUrl + 'users/').pipe(
+      map(members => {
+        this.members = members;
+        return members;
+      })
+        );
     //this.setUserParams(userParams);
     //const currentKey = Object.values(userParams).join('-');
     //const resposne = this.memberCache.get(currentKey);
@@ -77,12 +83,13 @@ export class MembersService {
  
   getMember(username: string) {
 
-    
-    const member = [...this.memberCache.values()]//spread operator
-      .reduce((arr, elem) => arr.concat(elem.result), [])//call back for all the elems 
-      .find((member: Member) => member.username === username);
+    const member = this.members.find(c => c.username === username);
+    if (member !== undefined) return of(member);
+    //const member = [...this.memberCache.values()]//spread operator
+    //  .reduce((arr, elem) => arr.concat(elem.result), [])//call back for all the elems 
+    //  .find((member: Member) => member.username === username);
 
-    if (member) return of(member);
+    //if (member) return of(member);
    return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
 
@@ -96,7 +103,12 @@ export class MembersService {
 
   updateMember(member: Member) {
 
-    return this.http.put(this.baseUrl + 'users', member);
+    return this.http.put(this.baseUrl + 'users', member).pipe(
+      map(() => {
+        const index = this.members.indexOf(member);
+        this.members[index] = member;
+      })
+    );
   }
 
   addLike(username: string) {
